@@ -11,6 +11,10 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
+  async findByEmail(email: string): Promise<UserEntity | undefined> {
+    return this.userRepository.findOne({ where: { email } });
+  }
+
   login = async (data: UserDTO): Promise<any> => {
     const { email, password } = data;
     const user = await this.userRepository.findOne({ where: { email } });

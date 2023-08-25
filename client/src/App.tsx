@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import PrivateRoute from './PrivateRoute';
+import Pokemon from './components/Pokemon';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -31,13 +32,9 @@ const App: React.FC = () => {
       <Route path="/register">
         <Register setUser={setUser} />
       </Route>
-      <PrivateRoute path="/profile" user={user} component={UserProfile} />
+      <PrivateRoute path="/pokemon" user={user} component={Pokemon} />
     </Router>
   );
-};
-
-const UserProfile: React.FC = () => {
-  return <h2>User Profile</h2>;
 };
 
 export default App;

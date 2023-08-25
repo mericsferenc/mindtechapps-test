@@ -4,11 +4,13 @@ import {
   Column,
   CreateDateColumn,
   BeforeInsert,
+  OneToMany,
 } from 'typeorm';
 
 import { hash, compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { UserSO } from './user.dto';
+import { PokemonEntity } from 'src/pokemon/pokemon.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -26,6 +28,9 @@ export class UserEntity {
 
   @CreateDateColumn()
   createdOn: Date;
+
+  @OneToMany(() => PokemonEntity, (pokemon) => pokemon.user)
+  pokemons: PokemonEntity[];
 
   @BeforeInsert()
   hashPassword = async () => {

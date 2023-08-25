@@ -27,7 +27,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
 
       setUser(response.data);
 
-      history.push('/profile');
+      history.push('/pokemon');
     } catch (error) {
       console.error('Login failed:', error);
     }

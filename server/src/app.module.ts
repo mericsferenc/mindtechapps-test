@@ -6,6 +6,8 @@ import { UserModule } from './user/user.module';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { HttpErrorFilter } from './shared/http-error.filter';
 import { UserEntity } from './user/user.entity';
+import { PokemonEntity } from './pokemon/pokemon.entity';
+import { PokemonModule } from './pokemon/pokemon.module';
 
 @Module({
   imports: [
@@ -16,10 +18,11 @@ import { UserEntity } from './user/user.entity';
       username: 'postgres',
       password: 'postgres',
       database: 'postgres',
-      entities: [UserEntity],
+      entities: [UserEntity, PokemonEntity],
       synchronize: true,
     }),
     UserModule,
+    PokemonModule,
   ],
   controllers: [AppController],
   providers: [

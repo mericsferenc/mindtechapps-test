@@ -26,6 +26,8 @@ const Register: React.FC<RegisterProps> = ({ setUser }) => {
         url: `${HOST}/register`,
         data: { email, password }
       });
+
+      console.log(response.data)
       
       setUser(response.data);
 
