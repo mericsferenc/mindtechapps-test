@@ -6,9 +6,10 @@ export interface UserDTO {
 }
 
 export interface Pokemon {
-    pokemonId: string
-    pokemonName: string
-}
+    pokemonId: string;
+    pokemonName: string;
+    [key: string]: string;
+  }
 
 export interface PokemonType {
     name: string;

@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import PrivateRoute from './PrivateRoute';
-import PokemonComponent from './components/PokemonComponent';
+import MyPokemons from './components/MyPokemons';
 import PokemonList from './components/PokemonList';
-import PokemonProfile from './components/PokemonProfile'; // Import the PokemonProfile component
+import PokemonProfile from './components/PokemonProfile';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -41,7 +41,7 @@ const App: React.FC = () => {
       <Route path="/register">
         <Register setUser={setUser} />
       </Route>
-      <PrivateRoute path="/pokemon" user={user} component={PokemonComponent} />
+      <PrivateRoute path="/pokemon" user={user} component={MyPokemons} />
     </Router>
   );
 };

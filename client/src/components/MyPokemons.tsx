@@ -3,9 +3,22 @@ import axios from 'axios';
 import { Pokemon, UserDTO } from '../types';
 import { API } from '../config';
 
-function PokemonComponent(user: UserDTO) {
+function MyPokemons(user: UserDTO) {
   const [pokemonIdToCatch, setPokemonIdToCatch] = useState('');
   const [caughtPokemons, setCaughtPokemons] = useState([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortBy, setSortBy] = useState<string>('pokemonId');
+
+  const customSort = (a: Pokemon, b: Pokemon): number => {
+    if (sortBy === 'pokemonId') {
+      return Number(a[sortBy]) - Number(b[sortBy]);
+    }
+    return a[sortBy].localeCompare(b[sortBy]);
+  };
+
+  const filteredAndSortedPokemons = caughtPokemons
+    .filter((pokemon: Pokemon) => pokemon.pokemonName.includes(searchQuery))
+    .sort(customSort);
 
   useEffect(() => {
     const fetchCaughtPokemons = async () => {
@@ -85,29 +98,43 @@ function PokemonComponent(user: UserDTO) {
 
   return (
     <div>
-        <input
-          type="number"
-          placeholder="Pokemon ID"
-          value={pokemonIdToCatch}
-          onChange={(e) => setPokemonIdToCatch(e.target.value)}
-        />
-        <button onClick={catchPokemon}>Catch</button>
+      <input
+        type="number"
+        placeholder="Pokemon ID"
+        value={pokemonIdToCatch}
+        onChange={(e) => setPokemonIdToCatch(e.target.value)}
+      />
+      <button onClick={catchPokemon}>Catch</button>
 
-        <div>
-          <h2>Caught Pokemons</h2>
-          <ul>
-            {caughtPokemons.map((pokemon: Pokemon) => (
-              <div>
-                <li key={pokemon.pokemonId}>{pokemon.pokemonName}</li>
-                <button onClick={() => releasePokemon(pokemon.pokemonId)}>
-                  RELEASE
-                </button>
-              </div>
-            ))}
-          </ul>
-        </div>
+      <div>
+        <input
+          type="text"
+          placeholder="Search by Pokemon Name"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <option value="pokemonId">Sort by ID</option>
+          <option value="pokemonName">Sort by Name</option>
+        </select>
+
+        <h2>Caught Pokemons</h2>
+        <ul>
+          {filteredAndSortedPokemons.map((pokemon: Pokemon) => (
+            <div key={pokemon.pokemonId}>
+              <li>{pokemon.pokemonId} - {pokemon.pokemonName}</li>
+              <button onClick={() => releasePokemon(pokemon.pokemonId)}>
+                RELEASE
+              </button>
+            </div>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
 
-export default PokemonComponent;
+export default MyPokemons;
