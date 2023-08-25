@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { UserDTO } from './types';
 
 interface PrivateRouteProps extends RouteProps {
   component: React.FC<any>;
-  user: any;
+  user: UserDTO;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, user, ...rest }) => {

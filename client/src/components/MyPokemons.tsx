@@ -56,8 +56,8 @@ function MyPokemons(user: UserDTO) {
       const pokemonData = await fetchPokemonById(pokemonIdToCatch)
       
       const pokemonToSave = {
-        id: pokemonData.data.id,
-        name: pokemonData.data.name,
+        id: pokemonData.id,
+        name: pokemonData.name,
       };
 
       await catchPokemonApiCall(parseInt(pokemonToSave.id), pokemonToSave.name, user);

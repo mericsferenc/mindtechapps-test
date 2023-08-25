@@ -1,7 +1,8 @@
 import axios from "axios";
 import { API } from "../../../config";
+import { UserDTO } from "../../../types";
 
-export const catchPokemonApiCall = async (pokemonId: number, pokemonName: string, user: any) => {
+export const catchPokemonApiCall = async (pokemonId: number, pokemonName: string, user: UserDTO) => {
     try {
       await axios({
         method: 'POST',
@@ -17,7 +18,7 @@ export const catchPokemonApiCall = async (pokemonId: number, pokemonName: string
     }
   };
   
-  export const releasePokemonApiCall = async (user: any, pokemonId: string) => {
+  export const releasePokemonApiCall = async (user: UserDTO, pokemonId: string) => {
       try {
         await axios({
           method: 'POST',

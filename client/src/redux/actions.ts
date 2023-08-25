@@ -1,3 +1,4 @@
+import { UserDTO } from '../types';
 import { CATCH_POKEMON, CLEAR_USER, RELEASE_POKEMON, SET_USER } from './actionTypes';
 
 export const catchPokemon = (pokemonName: string) => ({
@@ -10,7 +11,7 @@ export const releasePokemon = (pokemonName: string) => ({
   payload: pokemonName,
 });
 
-export const setUser = (user: any) => ({
+export const setUser = (user: UserDTO) => ({
   type: SET_USER,
   payload: user,
 });
