@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { catchPokemon, releasePokemon } from '../redux/actions';
+import Loader from './Loader';
 
 interface Ability {
   ability: {
@@ -56,7 +57,7 @@ function PokemonProfile(): JSX.Element {
   }, [pokemonUrl]);
 
   if (!pokemonDetail) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   const notHiddenAbilities = pokemonDetail.abilities.filter((ability: Ability) => !ability.is_hidden);
