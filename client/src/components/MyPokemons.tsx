@@ -123,13 +123,22 @@ function MyPokemons(user: UserDTO) {
           <option value="pokemonName">Sort by Name</option>
         </select>
 
+        <br/>
         <h2>Caught Pokemons</h2>
         {loading ? (
           <Loader />
         ) : (
           <ul>
             {filteredAndSortedPokemons.map((pokemon: Pokemon) => (
-              <div key={pokemon.pokemonId}>
+              <div key={pokemon.pokemonId} style={{ 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "space-between", 
+                width: "400px",
+                border: "6px solid #ff0000",
+                paddingLeft: "12px",
+                margin: "3px",
+                }}>
                 <li>
                   {pokemon.pokemonId} - {pokemon.pokemonName}
                 </li>
