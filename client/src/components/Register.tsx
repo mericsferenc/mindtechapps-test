@@ -1,30 +1,15 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import { API } from '../config';
+import useRegister from '../api/backend/authHooks/useRegister';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const history = useHistory();
+  const register = useRegister();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-
-      // TODO: make an api layer for this
-      await axios({
-        method: 'POST',
-        url: `${API}/register`,
-        data: { email, password }
-      });
-
-      history.push('/login');
-    } catch (error) {
-      console.error('Registration failed:', error);
-    }
+    register({ email, password });
   };
 
   return (

@@ -1,35 +1,16 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import { API } from '../config';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../redux/actions';
+import useLogin from '../api/backend/authHooks/useLogin';
 
 const Login: React.FC = () => {
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const history = useHistory();
-  const dispatch = useDispatch();
+  const login = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios({
-        method: 'POST',
-        url: `${API}/login`,
-        data: { email, password }
-      });
-
-      dispatch(setUser(response.data));
-      localStorage.setItem('user', JSON.stringify(response.data));
-
-      history.push('/pokemon');
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
+    e.preventDefault()
+    login({ email, password })
   };
 
   return (

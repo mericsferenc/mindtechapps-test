@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Pokemon, UserDTO } from '../types';
 import { API } from '../config';
 import Loader from './Loader';
+import { fetchPokemonById } from '../api/pokemon';
+import { catchPokemonApiCall, releasePokemonApiCall } from '../api/backend/crudOperations';
 
 function MyPokemons(user: UserDTO) {
   const [pokemonIdToCatch, setPokemonIdToCatch] = useState('');
@@ -51,22 +53,14 @@ function MyPokemons(user: UserDTO) {
     if (!pokemonIdToCatch) return;
   
     try {
-      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonIdToCatch}`);
+      const pokemonData = await fetchPokemonById(pokemonIdToCatch)
       
       const pokemonToSave = {
-        id: response.data.id,
-        name: response.data.name,
+        id: pokemonData.data.id,
+        name: pokemonData.data.name,
       };
 
-      await axios({
-        method: 'POST',
-        url: `${API}/pokemon/catch`,
-        data: {
-          pokemonId: parseInt(pokemonToSave.id), 
-          pokemonName: pokemonToSave.name,
-          user: user,
-        }
-      });
+      await catchPokemonApiCall(parseInt(pokemonToSave.id), pokemonToSave.name, user);
 
       setPokemonIdToCatch('');
 
@@ -79,14 +73,7 @@ function MyPokemons(user: UserDTO) {
 
   const releasePokemon = async (pokemonId: string) => {
     try {
-      await axios({
-        method: 'POST',
-        url: `${API}/pokemon/release`,
-        data: {
-          user,
-          pokemonId,
-        },
-      });
+      await releasePokemonApiCall(user, pokemonId);
       const updatedCaughtPokemons = caughtPokemons.filter(
         (pokemon: Pokemon) => pokemon.pokemonId !== pokemonId
       );
