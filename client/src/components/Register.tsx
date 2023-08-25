@@ -24,8 +24,6 @@ const Register: React.FC<RegisterProps> = ({ setUser }) => {
         url: `${API}/register`,
         data: { email, password }
       });
-
-      console.log(response.data)
       
       setUser(response.data);
 

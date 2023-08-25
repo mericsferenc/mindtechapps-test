@@ -44,9 +44,6 @@ function PokemonList(): JSX.Element {
       setFilteredPokemons([]);
     }
 
-
-    console.log("caughtPokemons", caughtPokemons)
-
   }, [selectedType]);
 
   const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {

@@ -18,33 +18,34 @@ function MyPokemons(user: UserDTO) {
     return a[sortBy].localeCompare(b[sortBy]);
   };
 
+  const fetchCaughtPokemons = async () => {
+    try {
+      setLoading(true);
+
+      const response = await axios({
+        method: 'POST',
+        url: `${API}/pokemon/all`,
+        data: {
+          user: user,
+        },
+      });
+
+      setCaughtPokemons(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Failed to fetch caught pokemons:', error);
+      setLoading(false);
+    }
+  };
+
   const filteredAndSortedPokemons = caughtPokemons
     .filter((pokemon: Pokemon) => pokemon.pokemonName.includes(searchQuery))
     .sort(customSort);
 
-    useEffect(() => {
-      const fetchCaughtPokemons = async () => {
-        try {
-          setLoading(true);
-  
-          const response = await axios({
-            method: 'POST',
-            url: `${API}/pokemon/all`,
-            data: {
-              user: user,
-            },
-          });
-  
-          setCaughtPokemons(response.data);
-          setLoading(false);
-        } catch (error) {
-          console.error('Failed to fetch caught pokemons:', error);
-          setLoading(false);
-        }
-      };
-
+  useEffect(() => {
     fetchCaughtPokemons();
-  }, [user, pokemonIdToCatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const catchPokemon = async () => {
     if (!pokemonIdToCatch) return;
@@ -57,11 +58,7 @@ function MyPokemons(user: UserDTO) {
         name: response.data.name,
       };
 
-      console.log(pokemonToSave)
-
-      
-
-      const res = await axios({
+      await axios({
         method: 'POST',
         url: `${API}/pokemon/catch`,
         data: {
@@ -71,9 +68,9 @@ function MyPokemons(user: UserDTO) {
         }
       });
 
-      console.log(res)
-
       setPokemonIdToCatch('');
+
+      fetchCaughtPokemons();
   
     } catch (error) {
       console.error('Failed to catch pokemon:', error);
@@ -82,7 +79,7 @@ function MyPokemons(user: UserDTO) {
 
   const releasePokemon = async (pokemonId: string) => {
     try {
-      const res = await axios({
+      await axios({
         method: 'POST',
         url: `${API}/pokemon/release`,
         data: {
@@ -90,8 +87,6 @@ function MyPokemons(user: UserDTO) {
           pokemonId,
         },
       });
-
-      console.log(res);
       const updatedCaughtPokemons = caughtPokemons.filter(
         (pokemon: Pokemon) => pokemon.pokemonId !== pokemonId
       );
