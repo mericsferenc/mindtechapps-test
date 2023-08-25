@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { API } from '../config';
 
 interface LoginProps {
   setUser: (user: any) => void;
@@ -12,16 +13,13 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
 
   const history = useHistory();
 
-  // TODO: refactor
-  const HOST = 'http://localhost:8080/api'
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       const response = await axios({
         method: 'POST',
-        url: `${HOST}/login`,
+        url: `${API}/login`,
         data: { email, password }
       });
 

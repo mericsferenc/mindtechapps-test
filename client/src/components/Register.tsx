@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { API } from '../config';
 
 interface RegisterProps {
   setUser: (user: any) => void;
@@ -12,9 +13,6 @@ const Register: React.FC<RegisterProps> = ({ setUser }) => {
 
   const history = useHistory();
 
-  // TODO: refactor
-  const HOST = 'http://localhost:8080/api'
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -23,7 +21,7 @@ const Register: React.FC<RegisterProps> = ({ setUser }) => {
       // TODO: make an api layer for this
       const response = await axios({
         method: 'POST',
-        url: `${HOST}/register`,
+        url: `${API}/register`,
         data: { email, password }
       });
 

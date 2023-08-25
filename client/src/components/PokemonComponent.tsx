@@ -1,9 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { UserDTO } from '../types';
+import { Pokemon, UserDTO } from '../types';
+import { API } from '../config';
 
-function Pokemon(user: UserDTO) {
+function PokemonComponent(user: UserDTO) {
   const [pokemonIdToCatch, setPokemonIdToCatch] = useState('');
+  const [caughtPokemons, setCaughtPokemons] = useState([]);
+
+  useEffect(() => {
+    const fetchCaughtPokemons = async () => {
+      try {
+
+        const response = await axios({
+          method: 'POST',
+          url: `${API}/pokemon/all`,
+          data: {
+            user: user,
+          }
+        });
+
+        setCaughtPokemons(response.data);
+      } catch (error) {
+        console.error('Failed to fetch caught pokemons:', error);
+      }
+    };
+
+    fetchCaughtPokemons();
+  }, [user]);
 
   const catchPokemon = async () => {
     if (!pokemonIdToCatch) return;
@@ -18,11 +41,11 @@ function Pokemon(user: UserDTO) {
 
       console.log(pokemonToSave)
 
-      const HOST = 'http://localhost:8080/api'
+      
 
       const res = await axios({
         method: 'POST',
-        url: `${HOST}/pokemon/catch`,
+        url: `${API}/pokemon/catch`,
         data: {
           pokemonId: parseInt(pokemonToSave.id), 
           pokemonName: pokemonToSave.name,
@@ -50,8 +73,20 @@ function Pokemon(user: UserDTO) {
           onChange={(e) => setPokemonIdToCatch(e.target.value)}
         />
         <button onClick={catchPokemon}>Catch</button>
+
+        <div>
+          <h2>Caught Pokemons</h2>
+          <ul>
+            {caughtPokemons.map((pokemon: Pokemon) => (
+              <div>
+                <li key={pokemon.pokemonId}>{pokemon.pokemonName}</li>
+                <button>RELEASE</button>
+              </div>
+            ))}
+          </ul>
+        </div>
     </div>
   );
 }
 
-export default Pokemon;
+export default PokemonComponent;

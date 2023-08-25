@@ -10,6 +10,8 @@ export class PokemonController {
   ) {}
 
   @Post('catch')
+  // AuthGuard should be used here...
+  // @UseGuards(new AuthGuard())
   async catchPokemon(@Body() pokemon) {
     const { pokemonId, pokemonName, user } = pokemon;
 
@@ -26,5 +28,17 @@ export class PokemonController {
         pokemonName,
       });
     }
+  }
+
+  @Post('all')
+  // AuthGuard should be used here...
+  // @UseGuards(new AuthGuard())
+  async getCaughtPokemons(@Body() userData) {
+    const { user } = userData;
+
+    const caughtPokemons = await this.pokemonService.getCaughtPokemons(
+      user.email,
+    );
+    return caughtPokemons;
   }
 }

@@ -1,5 +1,3 @@
-// src/pokemon/pokemon.service.ts
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -41,5 +39,18 @@ export class PokemonService {
     await this.pokemonRepository.save(newPokemon);
 
     return newPokemon;
+  }
+
+  async getCaughtPokemons(userEmail: string): Promise<PokemonEntity[]> {
+    const user = await this.userService.findByEmail(userEmail);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.pokemonRepository.find({
+      where: {
+        user: { id: user.id },
+      },
+    });
   }
 }

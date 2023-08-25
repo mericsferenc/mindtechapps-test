@@ -4,3 +4,8 @@ export interface UserDTO {
     id: string
     createdOn: string
 }
+
+export interface Pokemon {
+    pokemonId: string
+    pokemonName: string
+}
