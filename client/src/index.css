@@ -4,6 +4,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fbf15c;
+  font-weight: bold;
 }
 
 code {
@@ -15,6 +16,11 @@ nav ul {
   margin: 0;
   padding: 0;
   display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: red;
 }
 
 li {
@@ -25,15 +31,10 @@ li {
 a {
   display: block;
   padding: 8px;
-  background-color: rgb(47, 133, 239);
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: red;
+  /* background-color: rgb(47, 133, 239);
+  border-radius: 20px; */
+  border-bottom: 7px solid rgb(47, 133, 239);
+  margin: 3px;
 }
 
 li a {
@@ -44,13 +45,89 @@ li a {
   text-decoration: none;
 }
 
-li a:hover {
+li a:hover, button:hover {
   background-color: #1ac2ff;
+  cursor: pointer;
 }
 
 .pokemons-list {
   background-color: rgb(47, 133, 239) !important;
-  border: 2px solid red;
-  height: 275px;
+  border: 6px solid red;
+  height: 281px;
   overflow: auto;
+}
+
+button, input, select {
+  border: 6px solid rgb(47, 133, 239);
+  color: rgb(47, 133, 239);
+  font-weight: bold;
+  background-color: transparent;
+  font-family: "Monaco", monospace;
+  padding: 8px;
+  font-size: 20px;
+  margin: 3px;
+}
+
+button:active {
+  transform: scale(1.05);
+}
+
+.checkbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.checkbox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.checkbox input:checked ~ .checkmark {
+  background-color: rgb(47, 133, 239);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }

@@ -88,13 +88,22 @@ function PokemonList(): JSX.Element {
         value={searchQuery}
         onChange={handleSearchChange}
       />
-
+{/* 
       <h2>Catched Pokemons Only</h2>
       <input
         type="checkbox"
         checked={showCaughtOnly}
         onChange={handleCheckboxChange}
+      /> */}
+
+    <label className="checkbox">Catched Pokemons Only
+    <input
+        type="checkbox"
+        checked={showCaughtOnly}
+        onChange={handleCheckboxChange}
       />
+      <span className="checkmark"></span>
+    </label>
 
     {
       selectedType !== '' &&
