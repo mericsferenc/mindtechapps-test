@@ -10,3 +10,13 @@ export const fetchPokemonById = async (pokemonIdToCatch: string) => {
     return null;
   }
 };
+
+export const fetchPokemonTypes = async () => {
+  try {
+    const response = await axios.get('https://pokeapi.co/api/v2/type');
+    return response.data.results;
+  } catch (error) {
+    console.error('Failed to fetch types:', error);
+    return [];
+  }
+};

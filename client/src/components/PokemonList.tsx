@@ -3,6 +3,7 @@ import axios from 'axios';
 import { PokemonListType, PokemonType } from '../types';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { fetchPokemonTypes } from '../api/pokemon';
 
 function PokemonList(): JSX.Element {
   const [types, setTypes] = useState<PokemonType[]>([]);
@@ -17,8 +18,8 @@ function PokemonList(): JSX.Element {
   useEffect(() => {
     const fetchTypes = async (): Promise<void> => {
       try {
-        const response = await axios.get('https://pokeapi.co/api/v2/type');
-        setTypes(response.data.results);
+        const typesData = await fetchPokemonTypes();
+        setTypes(typesData);
       } catch (error) {
         console.error('Failed to fetch types:', error);
       }
@@ -63,7 +64,7 @@ function PokemonList(): JSX.Element {
   };
 
   const filteredCaughtResults = showCaughtOnly
-    ? filteredResults.filter((pokemon: string) => caughtPokemons.includes(pokemon)) // Filter caught pokemons
+    ? filteredResults.filter((pokemon: string) => caughtPokemons.includes(pokemon))
     : filteredResults;
 
   return (
