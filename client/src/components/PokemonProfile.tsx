@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { catchPokemon, releasePokemon } from '../redux/actions';
 
 interface Ability {
   ability: {
@@ -25,8 +27,20 @@ interface PokemonDetail {
 function PokemonProfile(): JSX.Element {
     const { pokemonName }: any = useParams();
     const [pokemonDetail, setPokemonDetail] = useState<PokemonDetail | null>(null);
+    const caughtPokemons = useSelector((state: any) => state.caughtPokemons);
+    const dispatch = useDispatch();
   
+    const isCaught = caughtPokemons.includes(pokemonName);
+
     const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+
+    const handleCatchRelease = () => {
+        if (isCaught) {
+          dispatch(releasePokemon(pokemonName));
+        } else {
+          dispatch(catchPokemon(pokemonName));
+        }
+      };
 
   useEffect(() => {
     const fetchPokemonDetail = async (): Promise<void> => {
@@ -60,6 +74,9 @@ function PokemonProfile(): JSX.Element {
           <li key={ability.ability.name}>{ability.ability.name}</li>
         ))}
       </ul>
+      <button onClick={handleCatchRelease}>
+        {isCaught ? 'Release' : 'Catch'}
+      </button>
     </div>
   );
 }

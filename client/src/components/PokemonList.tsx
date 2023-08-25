@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PokemonListType, PokemonType } from '../types';
-import PokemonProfile from './PokemonProfile';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function PokemonList(): JSX.Element {
   const [types, setTypes] = useState<PokemonType[]>([]);
   const [selectedType, setSelectedType] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredPokemons, setFilteredPokemons] = useState<string[]>([]);
-  const [selectedPokemon, setSelectedPokemon] = useState<string>(''); // This was missing
+  const [showCaughtOnly, setShowCaughtOnly] = useState<boolean>(false);
+
+  const caughtPokemons = useSelector((state: any) => state.caughtPokemons);
+
 
   useEffect(() => {
     const fetchTypes = async (): Promise<void> => {
@@ -40,6 +43,10 @@ function PokemonList(): JSX.Element {
     } else {
       setFilteredPokemons([]);
     }
+
+
+    console.log("caughtPokemons", caughtPokemons)
+
   }, [selectedType]);
 
   const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
@@ -53,6 +60,14 @@ function PokemonList(): JSX.Element {
   const filteredResults = filteredPokemons.filter((pokemon: string) =>
     pokemon.includes(searchQuery.toLowerCase())
   );
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setShowCaughtOnly(event.target.checked);
+  };
+
+  const filteredCaughtResults = showCaughtOnly
+    ? filteredResults.filter((pokemon: string) => caughtPokemons.includes(pokemon)) // Filter caught pokemons
+    : filteredResults;
 
   return (
     <div>
@@ -74,12 +89,19 @@ function PokemonList(): JSX.Element {
         onChange={handleSearchChange}
       />
 
-      <h2>Pokemons</h2>
+      <h2>Catched Pokemons Only</h2>
+      <input
+        type="checkbox"
+        checked={showCaughtOnly}
+        onChange={handleCheckboxChange}
+      />
+
+    <h2>Pokemons</h2>
       <ul>
-        {filteredResults.map((pokemonName: string) => (
-            <li key={pokemonName}>
-                <Link to={`/pokemon-profile/${pokemonName}`}>{pokemonName}</Link>
-            </li>
+        {filteredCaughtResults.map((pokemonName: string) => (
+          <li key={pokemonName}>
+            <Link to={`/pokemon-profile/${pokemonName}`}>{pokemonName}</Link>
+          </li>
         ))}
       </ul>
 

@@ -15,6 +15,9 @@ const App: React.FC = () => {
       <nav>
         <ul>
           <li>
+            <Link to="/">HOME</Link>
+          </li>
+          <li>
             <Link to="/login">Login</Link>
           </li>
           <li>
