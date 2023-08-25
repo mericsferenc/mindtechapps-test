@@ -73,7 +73,7 @@ function PokemonList(): JSX.Element {
     <div>
       <h2>Select a Pokemon Type</h2>
       <select value={selectedType} onChange={handleTypeChange}>
-        <option value="">All</option>
+        <option value="">Please select the type</option>
         {types.map((type: PokemonType) => (
           <option key={type.name} value={type.url}>
             {type.name}
@@ -96,15 +96,21 @@ function PokemonList(): JSX.Element {
         onChange={handleCheckboxChange}
       />
 
-    <h2>Pokemons</h2>
-      <ul>
-        {filteredCaughtResults.map((pokemonName: string) => (
-          <li key={pokemonName}>
-            <Link to={`/pokemon-profile/${pokemonName}`}>{pokemonName}</Link>
-          </li>
-        ))}
-      </ul>
+    {
+      selectedType !== '' &&
+      <><h2>Pokemons</h2>
+      <div className='pokemons-list'>
+        <ul >
+          {filteredCaughtResults.map((pokemonName: string) => (
+            <li key={pokemonName}>
+              <Link to={`/pokemon-profile/${pokemonName}`}>{pokemonName}</Link>
+            </li>
+          ))}
+        </ul>
+      </div></>
+    }
 
+    
     </div>
   );
 }

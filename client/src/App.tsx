@@ -17,12 +17,14 @@ const App: React.FC = () => {
           <li>
             <Link to="/">HOME</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
+          <div style={{ marginLeft: "auto" }}>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          </div>
           {user && (
             <li>
               <Link to="/" onClick={() => setUser(null)}>Logout</Link>

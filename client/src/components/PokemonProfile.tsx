@@ -75,6 +75,7 @@ function PokemonProfile(): JSX.Element {
           <li key={ability.ability.name}>{ability.ability.name}</li>
         ))}
       </ul>
+      <br/>
       <button onClick={handleCatchRelease}>
         {isCaught ? 'Release' : 'Catch'}
       </button>
