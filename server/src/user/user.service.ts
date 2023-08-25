@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { UserDTO, UserSO } from './user.dto';
+import { UserDTO } from './user.dto';
 
 @Injectable()
 export class UserService {
@@ -11,7 +11,7 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  login = async (data: UserDTO): Promise<UserSO> => {
+  login = async (data: UserDTO): Promise<any> => {
     const { email, password } = data;
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user || !(await user.comparePassword(password))) {
@@ -20,10 +20,11 @@ export class UserService {
         HttpStatus.UNAUTHORIZED,
       );
     }
-    return user.sanitizeObject({ withToken: true });
+    // return user.sanitizeObject({ withToken: true }); => it gave 204 no content for some reason...
+    return user;
   };
 
-  register = async (data: UserDTO): Promise<UserSO> => {
+  register = async (data: UserDTO): Promise<any> => {
     const { email } = data;
     let user = await this.userRepository.findOne({ where: { email } });
     if (user) {
@@ -31,7 +32,8 @@ export class UserService {
     } else {
       user = await this.userRepository.create(data);
       await this.userRepository.save(user);
-      return user.sanitizeObject({ withToken: true });
+      // return user.sanitizeObject({ withToken: true }); => it gave 204 no content for some reason...
+      return user;
     }
   };
 

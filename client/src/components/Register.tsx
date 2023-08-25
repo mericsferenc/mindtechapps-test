@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 interface RegisterProps {
   setUser: (user: any) => void;
@@ -9,6 +10,8 @@ const Register: React.FC<RegisterProps> = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const history = useHistory();
+
   // TODO: refactor
   const HOST = 'http://localhost:8080/api'
 
@@ -17,6 +20,7 @@ const Register: React.FC<RegisterProps> = ({ setUser }) => {
 
     try {
 
+      // TODO: make an api layer for this
       const response = await axios({
         method: 'POST',
         url: `${HOST}/register`,
@@ -24,6 +28,8 @@ const Register: React.FC<RegisterProps> = ({ setUser }) => {
       });
       
       setUser(response.data);
+
+      history.push('/login');
     } catch (error) {
       console.error('Registration failed:', error);
     }
