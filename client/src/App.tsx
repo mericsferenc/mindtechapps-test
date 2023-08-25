@@ -17,6 +17,11 @@ const App: React.FC = () => {
           <li>
             <Link to="/register">Register</Link>
           </li>
+          {user && (
+            <li>
+              <Link to="/" onClick={() => setUser(null)}>Logout</Link>
+            </li>
+          )}
         </ul>
       </nav>
 

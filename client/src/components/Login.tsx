@@ -19,14 +19,11 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
     e.preventDefault();
 
     try {
-
       const response = await axios({
         method: 'POST',
         url: `${HOST}/login`,
         data: { email, password }
       });
-
-      console.log(response)
 
       setUser(response.data);
 
@@ -40,8 +37,16 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
     <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type="submit">Login</button>
       </form>
     </div>
