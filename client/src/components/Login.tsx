@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { API } from '../config';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../redux/actions';
 
-interface LoginProps {
-  setUser: (user: any) => void;
-}
-
-const Login: React.FC<LoginProps> = ({ setUser }) => {
+const Login: React.FC = () => {
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +23,8 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
         data: { email, password }
       });
 
-      setUser(response.data);
+      dispatch(setUser(response.data));
+      localStorage.setItem('user', JSON.stringify(response.data));
 
       history.push('/pokemon');
     } catch (error) {

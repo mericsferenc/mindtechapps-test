@@ -3,11 +3,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { API } from '../config';
 
-interface RegisterProps {
-  setUser: (user: any) => void;
-}
-
-const Register: React.FC<RegisterProps> = ({ setUser }) => {
+const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,13 +15,11 @@ const Register: React.FC<RegisterProps> = ({ setUser }) => {
     try {
 
       // TODO: make an api layer for this
-      const response = await axios({
+      await axios({
         method: 'POST',
         url: `${API}/register`,
         data: { email, password }
       });
-      
-      setUser(response.data);
 
       history.push('/login');
     } catch (error) {
