@@ -33,17 +33,21 @@ const App: React.FC = () => {
         </ul>
       </nav>
 
-      <Route path="/pokemon-profile/:pokemonName" component={PokemonProfile} />
+      <div style={{ padding: "30px" }}>
+        <Route path="/pokemon-profile/:pokemonName" component={PokemonProfile} />
 
-      <Route exact path="/" component={PokemonList} />
+        <Route exact path="/" component={PokemonList} />
 
-      <Route path="/login">
-        <Login setUser={setUser} />
-      </Route>
-      <Route path="/register">
-        <Register setUser={setUser} />
-      </Route>
-      <PrivateRoute path="/pokemon" user={user} component={MyPokemons} />
+        <Route path="/login">
+          <Login setUser={setUser} />
+        </Route>
+        <Route path="/register">
+          <Register setUser={setUser} />
+        </Route>
+        <PrivateRoute path="/pokemon" user={user} component={MyPokemons} />
+      </div>
+
+      
     </Router>
   );
 };

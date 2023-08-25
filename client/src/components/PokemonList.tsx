@@ -70,56 +70,61 @@ function PokemonList(): JSX.Element {
     : filteredResults;
 
   return (
-    <div>
-      <h2>Select a Pokemon Type</h2>
-      <select value={selectedType} onChange={handleTypeChange}>
-        <option value="">Please select the type</option>
-        {types.map((type: PokemonType) => (
-          <option key={type.name} value={type.url}>
-            {type.name}
-          </option>
-        ))}
-      </select>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div style={{ display: "flex"}}>
 
-      <h2>Search by Name</h2>
-      <input
-        type="text"
-        placeholder="Search by name"
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
-{/* 
-      <h2>Catched Pokemons Only</h2>
-      <input
-        type="checkbox"
-        checked={showCaughtOnly}
-        onChange={handleCheckboxChange}
-      /> */}
+        <div>
+          <h3>Select a Pokemon Type</h3>
+          <select value={selectedType} onChange={handleTypeChange}>
+            <option value="">Please select the type</option>
+            {types.map((type: PokemonType) => (
+              <option key={type.name} value={type.url}>
+                {type.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-    <label className="checkbox">Catched Pokemons Only
-    <input
-        type="checkbox"
-        checked={showCaughtOnly}
-        onChange={handleCheckboxChange}
-      />
-      <span className="checkmark"></span>
-    </label>
+        <div style={{ padding: 20 }}></div>
 
-    {
-      selectedType !== '' &&
-      <><h2>Pokemons</h2>
-      <div className='pokemons-list'>
-        <ul >
-          {filteredCaughtResults.map((pokemonName: string) => (
-            <li key={pokemonName}>
-              <Link to={`/pokemon-profile/${pokemonName}`}>{pokemonName}</Link>
-            </li>
-          ))}
-        </ul>
-      </div></>
-    }
+        <div>
+          <h3>Search by Name</h3>
+          <input
+            type="text"
+            placeholder="Search by name"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+        </div>
+      
+      </div>
 
-    
+      <div style={{ padding: 10 }}></div>
+
+      <div>
+          <label className="checkbox" style={{ fontSize: 20 }}>Catched Pokemons Only
+          <input
+              type="checkbox"
+              checked={showCaughtOnly}
+              onChange={handleCheckboxChange}
+            />
+            <span className="checkmark"></span>
+          </label>
+      </div>
+
+      {
+        selectedType !== '' &&
+        <><h2>Pokemons</h2>
+        <div className='pokemons-list'>
+          <ul >
+            {filteredCaughtResults.map((pokemonName: string) => (
+              <li key={pokemonName}>
+                <Link to={`/pokemon-profile/${pokemonName}`}>{pokemonName}</Link>
+              </li>
+            ))}
+          </ul>
+        </div></>
+      }
     </div>
   );
 }

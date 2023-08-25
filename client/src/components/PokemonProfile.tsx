@@ -76,7 +76,9 @@ function PokemonProfile(): JSX.Element {
         ))}
       </ul>
       <br/>
-      <button onClick={handleCatchRelease}>
+      <br/>
+      <br/>
+      <button onClick={handleCatchRelease} style={{ background: isCaught ? "orange" : "lightgreen" }}>
         {isCaught ? 'Release' : 'Catch'}
       </button>
     </div>

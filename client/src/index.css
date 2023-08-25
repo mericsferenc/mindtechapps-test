@@ -54,6 +54,7 @@ li a:hover, button:hover {
   background-color: rgb(47, 133, 239) !important;
   border: 6px solid red;
   height: 281px;
+  width: 100%;
   overflow: auto;
 }
 
@@ -64,7 +65,7 @@ button, input, select {
   background-color: transparent;
   font-family: "Monaco", monospace;
   padding: 8px;
-  font-size: 20px;
+  font-size: 16px;
   margin: 3px;
 }
 
