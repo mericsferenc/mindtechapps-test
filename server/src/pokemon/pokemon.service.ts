@@ -53,4 +53,26 @@ export class PokemonService {
       },
     });
   }
+
+  async releasePokemon(userEmail: string, pokemonId: number) {
+    const user = await this.userService.findByEmail(userEmail);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const releasedPokemon = await this.pokemonRepository.findOne({
+      where: {
+        user: { id: user.id },
+        pokemonId,
+      },
+    });
+
+    if (!releasedPokemon) {
+      throw new NotFoundException('Pokemon not found');
+    }
+
+    await this.pokemonRepository.remove(releasedPokemon);
+
+    return releasedPokemon;
+  }
 }

@@ -41,4 +41,18 @@ export class PokemonController {
     );
     return caughtPokemons;
   }
+
+  @Post('release')
+  // AuthGuard should be used here...
+  // @UseGuards(new AuthGuard(
+  async releasePokemon(@Body() requestData) {
+    const { user, pokemonId } = requestData;
+
+    const releasedPokemon = await this.pokemonService.releasePokemon(
+      user.email,
+      pokemonId,
+    );
+
+    return releasedPokemon;
+  }
 }

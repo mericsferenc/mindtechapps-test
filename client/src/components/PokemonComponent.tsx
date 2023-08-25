@@ -26,7 +26,7 @@ function PokemonComponent(user: UserDTO) {
     };
 
     fetchCaughtPokemons();
-  }, [user]);
+  }, [user, pokemonIdToCatch]);
 
   const catchPokemon = async () => {
     if (!pokemonIdToCatch) return;
@@ -60,9 +60,28 @@ function PokemonComponent(user: UserDTO) {
     } catch (error) {
       console.error('Failed to catch pokemon:', error);
     }
-  }; // add it to the db
+  };
 
-  // const releasePokemon = async () => {} // remove it from the db
+  const releasePokemon = async (pokemonId: string) => {
+    try {
+      const res = await axios({
+        method: 'POST',
+        url: `${API}/pokemon/release`,
+        data: {
+          user,
+          pokemonId,
+        },
+      });
+
+      console.log(res);
+      const updatedCaughtPokemons = caughtPokemons.filter(
+        (pokemon: Pokemon) => pokemon.pokemonId !== pokemonId
+      );
+      setCaughtPokemons(updatedCaughtPokemons);
+    } catch (error) {
+      console.error('Failed to release pokemon:', error);
+    }
+  };
 
   return (
     <div>
@@ -80,7 +99,9 @@ function PokemonComponent(user: UserDTO) {
             {caughtPokemons.map((pokemon: Pokemon) => (
               <div>
                 <li key={pokemon.pokemonId}>{pokemon.pokemonName}</li>
-                <button>RELEASE</button>
+                <button onClick={() => releasePokemon(pokemon.pokemonId)}>
+                  RELEASE
+                </button>
               </div>
             ))}
           </ul>
