@@ -25,7 +25,7 @@ services:
       - db
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/mydatabase
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
 
   db:
     image: postgres
@@ -34,7 +34,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=mydatabase
+      - POSTGRES_DB=postgres
     networks:
       - database
 

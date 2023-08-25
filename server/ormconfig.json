@@ -5,7 +5,7 @@
   "password": "postgres",
   "synchronize": true,
   "logging": true,
-  "database": "mydatabase",
+  "database": "postgres",
   "port": 5432,
   "entities": ["./src/**/*.entity.ts", "./**/*.entity.js"]
 }
