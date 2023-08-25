@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PokemonListType, PokemonType } from '../types';
+import PokemonProfile from './PokemonProfile';
+import { Link } from 'react-router-dom';
 
 function PokemonList(): JSX.Element {
   const [types, setTypes] = useState<PokemonType[]>([]);
   const [selectedType, setSelectedType] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredPokemons, setFilteredPokemons] = useState<string[]>([]);
+  const [selectedPokemon, setSelectedPokemon] = useState<string>(''); // This was missing
 
   useEffect(() => {
     const fetchTypes = async (): Promise<void> => {
@@ -74,9 +77,12 @@ function PokemonList(): JSX.Element {
       <h2>Pokemons</h2>
       <ul>
         {filteredResults.map((pokemonName: string) => (
-          <li key={pokemonName}>{pokemonName}</li>
+            <li key={pokemonName}>
+                <Link to={`/pokemon-profile/${pokemonName}`}>{pokemonName}</Link>
+            </li>
         ))}
       </ul>
+
     </div>
   );
 }

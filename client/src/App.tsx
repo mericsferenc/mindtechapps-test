@@ -5,6 +5,7 @@ import Register from './components/Register';
 import PrivateRoute from './PrivateRoute';
 import PokemonComponent from './components/PokemonComponent';
 import PokemonList from './components/PokemonList';
+import PokemonProfile from './components/PokemonProfile'; // Import the PokemonProfile component
 
 const App: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -27,7 +28,9 @@ const App: React.FC = () => {
         </ul>
       </nav>
 
-      <PokemonList />
+      <Route path="/pokemon-profile/:pokemonName" component={PokemonProfile} />
+
+      <Route exact path="/" component={PokemonList} />
 
       <Route path="/login">
         <Login setUser={setUser} />
