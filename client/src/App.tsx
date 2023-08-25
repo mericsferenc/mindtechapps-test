@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import PrivateRoute from './PrivateRoute';
 import PokemonComponent from './components/PokemonComponent';
+import PokemonList from './components/PokemonList';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -25,6 +26,8 @@ const App: React.FC = () => {
           )}
         </ul>
       </nav>
+
+      <PokemonList />
 
       <Route path="/login">
         <Login setUser={setUser} />

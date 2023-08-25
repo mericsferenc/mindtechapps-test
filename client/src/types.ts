@@ -9,3 +9,15 @@ export interface Pokemon {
     pokemonId: string
     pokemonName: string
 }
+
+export interface PokemonType {
+    name: string;
+    url: string;
+}
+  
+export interface PokemonListType {
+    pokemon: {
+      name: string;
+      url: string;
+    };
+}
